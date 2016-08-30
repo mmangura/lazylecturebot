@@ -35,7 +35,7 @@ def watch_video_view(request, videopost_id):
     return render(request, "videoapp/watch_template.html", context)
 
 
-""""
+"""
 Helper function that retrieves a list of transcripts when passed a VideoObject.
 """
 
@@ -119,10 +119,10 @@ def search_utterances(request):
             json.dumps({""}), content_type="application/json"
         )
 
-"""""
+"""
 method that returns the status of the transcript processing
 and returns the processesed transcript when finished.
-"""""
+"""
 @csrf_protect
 def ajax_transcript_status(request):
     if request.is_ajax():

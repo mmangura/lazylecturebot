@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% block title %}{{ post.title }} | {{ block.super }}{% endblock title %}
 {% block content %}
-{{block.super}}
+{{ block.super }}
 {% load static %}
 <script src="{% static 'js/popcorn-complete.min.js' %}"></script>
 <div class="container-fluid" style="padding-top:30px;">
@@ -64,22 +64,14 @@
 			video.code({
 				start: startTime,
 				end: endTime,
-
-				onStart: function( options ) {
-          			beginLine(index);
-        		},
-
-        		onEnd: function(options) {
-        			endLine();
-        		}
-
+				onStart: function(options){ beginLine(index); },
+        		onEnd: function(options){ endLine(); }
 			});
 		});
 
-
-		/*/////////////////////////////////////////////////////////
-		 * UTTERANCE SEARCH 
-		 */////////////////////////////////////////////////////////
+		/*
+		 * UTTERANCE SEARCH - handles searching through utterances to find the desired phrase in the transcript.
+		 */
 	    var $utterance_form = $(".utterance-form");
 	    var $query_input = $utterance_form.find("input[name='query']");
 	    var video_id = $utterance_form.find("input[name='video-id']").val();
@@ -97,7 +89,6 @@
 	                "video_id": video_id,
 	                "query": $query_input.val(),
 	            },
-
 	            success: function(json) {
 	                var utterance_ids = new Set(json["utterance_ids"]);
 	                $(".utterance").each(function() {
@@ -110,14 +101,10 @@
 	                    }
 	                });
 	            },
-
-	            error: function(xhr, errmsg, err) {
-
-	            }
+	            error: function(xhr, errmsg, err) { }
 	        });
         });	    	
 	}
-
 
 	// Adds a highlight class to the utterance
 	function beginLine(num) {

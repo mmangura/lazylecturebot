@@ -19,16 +19,16 @@
 		{% for transcript in transcript_data %}
 			{% for utterance in transcript.utterances %}
 				<div class="utterance" 
-						id="{{utterance.id}}"
-						data-utterance-id="{{utterance.id}}"
-						onclick="goToVideoTime( {{ utterance.start_time }} );" 
+						id="{{ utterance.id }}"
+						data-utterance-id="{{ utterance.id }}"
+						onclick="goToVideoTime({{ utterance.start_time }});" 
 						startTime="{{ utterance.start_time }}" endTime="{{ utterance.end_time }}">
 					<dt>{{ utterance.h_start }} - {{ utterance.h_end }}
 						<dd>{{ utterance.text }}</dd>
 					</dt>
 				</div>
 			{% endfor %}
-		{%endfor%}
+		{% endfor %}
 	</dl>
 	{% endif %}
 </div>

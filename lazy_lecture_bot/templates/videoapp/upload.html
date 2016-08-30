@@ -1,11 +1,11 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}
-{% block title %}Upload | {{block.super}}{% endblock title %}
-{% block head %}{{block.super}}{{form.media}}{% endblock head %}
+{% block title %}Upload | {{ block.super }}{% endblock title %}
+{% block head %}{{ block.super }}{{ form.media }}{% endblock head %}
 
 
 {% block content %}
-{{block.super}}
+{{ block.super }}
 
 <div class="container-fluid">
 	<div class="row">
@@ -25,7 +25,7 @@
 			<!-- PRIVACY GROUP-->
 			<div class="form-group">
 				<div>Privacy Settings</div>
-				{{form.public_access}}
+				{{ form.public_access }}
 			</div>
 			
 			<!-- FILE UPLOAD GROUP-->
@@ -33,7 +33,7 @@
 			<div class="form-group" style="padding: 20px 20px 60px 20px; border: solid 1px gray">
 				{{ form.video_file }}
 			</div>
-			<div>{{form.media}}</div>
+			<div>{{ form.media }}</div>
 			<!--SUBMIT BUTTON-->
             <div class="submit-row">
                 <button type="submit" class="btn btn-primary btn-lg" style="background-color: rgb(46, 204, 113); border-radius: 0px; border-style: none;"><b>UPLOAD</b></button>
