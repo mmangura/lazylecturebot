@@ -4,7 +4,7 @@ import sys
 from tempfile import NamedTemporaryFile
 
 from modules.video_processing.video_processing import get_audio_params, read_audio_frames, bytes_to_n_frames, \
-    copy_audio_file_settings
+    copy_audio_file_settings, new_audio_buffer
 from modules.voice_to_text.audio_segmenter import AudioSegmenter
 
 
@@ -30,19 +30,18 @@ class MaxSizeAudioSegmenter(AudioSegmenter):
         # the number of channels * the number of bytes to represent each channel
         bytes_per_frame = params["nchannels"] * params["sampwidth"]
         # Calculate the target number of frames for each segment
-        n_frames = self.max_size - empty_bytes_size // bytes_per_frame
+        n_frames = (self.max_size - empty_bytes_size) // bytes_per_frame
 
         results = list()
         for segment in read_audio_frames(audio, n_frames):
             frames_in_segment = bytes_to_n_frames(segment, params["nchannels"], params["sampwidth"])
             segment_duration = frames_in_segment / params["framerate"]
             # Assume this will be moved and don't delete
-            tmp = NamedTemporaryFile("wb", delete=False)
             # nframes will be adjusted automatically by writeframes. Everything else is the same.
-            wave_write = copy_audio_file_settings(audio, tmp.name)
+            wave_write, buffer = new_audio_buffer(audio)
             wave_write.writeframes(segment)
             wave_write.close()
 
-            results.append((tmp.name, segment_duration))
+            results.append((buffer.getvalue(), segment_duration))
 
         return results

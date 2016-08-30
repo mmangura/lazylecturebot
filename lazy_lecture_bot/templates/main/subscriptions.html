@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% with "subscriptions" as page %}
+    {{block.super}}
+{% endwith %}
+
+<div class="container" style="padding-top: 30px;">
+	<div style="margin-top:30px;">
+		<div class="row">
+			{% if query %}
+            <div style="margin-bottom:10px;">
+                Showing search results for <span style="font-style: italic">"{{ query }}"</span>
+            </div>
+            {% endif %}
+            {% include "main/view_videos.html" with vp=vp show_favorites=True show_subscribe=True %}
+		</div>
+		<div>
+	        <ul class="pagination">
+	            {% for page in pages %}
+	                {% if page == current_page %}
+	                    <li class="active"><a href="#" onClick="return false;">{{ page }}</a></li>
+	                {% else %}
+	                    <li><a href="{% url 'favorites' %}?{{ page_path }}&page={{ page }}">{{ page }}</a></li>
+	                {% endif %}
+	            {% endfor %}
+	        </ul>
+        </div>
+	</div>
+</div>
+{% endblock content %}

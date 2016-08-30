@@ -15,16 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
-from user import views as user_views
+from lazy_lecture_bot import initial_data_loading
+from haystack.views import SearchView
 
 urlpatterns = [
     # map sends the default index page to be mapped by the main app
-    url(r'^$', include('main.urls'), name="main"),
     url(r'^admin/', admin.site.urls, name="admin"),
     url(r'^u/', include('user.urls')),
-    url(r'^signup/', user_views.signup_view, name="signup"),
-    url(r'^logoff/', user_views.logoff_user, name="logoff"),
-    url(r'^login/$', user_views.login_user, name="login"),
-    url(r'^login/auth_login/$', user_views.auth_login, name="auth_login"),
+    url(r'^watch/', include('videoapp.urls'), name="video_watch"),
+    url(r'^s3direct/', include('s3direct.urls')),
+    url(r'^search/', SearchView('search/search.html'), name='haystack_search'),
+    url(r'^', include('main.urls'), name="main"),
 ]
+
+
+# urls.py is only ever loaded once, so it's a good place for one-off startup loading
+def startup():
+    initial_data_loading.import_data()
+
+
+startup()

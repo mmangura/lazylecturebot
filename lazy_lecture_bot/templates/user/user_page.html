@@ -1,10 +1,40 @@
 {% extends "main/base.html" %}
-{% block title %}{{user_instance.username}} | {{block.super}}{% endblock title %}
+{% block title %}{{ user_instance.username }} | {{ block.super }}{% endblock title %}
 {% block content %}
 {{block.super}}
-<h1><a href='{% url "profile" username=user_instance.username %}'>{{user_instance.username}}</a></h1>
-<div>
-	{{user_instance.username}}'s videos
-	<div>None</div>
+<div class="container-fluid user-profile" style="padding-top:20px;">
+	<div class="row">
+		<div>
+			<center><img class="profile-picture" src="https://placehold.it/160x160" />
+			<span><h2>{{ user_instance.username }}</h2></span></center>
+		</div>
+	</div>
 </div>
+
+{% if vp %}
+<div class="container" style="margin-top: 20px;">
+	<div class="row" style="margin-top: 30px;">
+        {% include "main/view_videos.html" with vp=vp %}
+	</div>
+</div>
+{% else %}
+	<div class="container" style="margin-top:50px;">
+		<span style="color:grey; font-size:3em;">{{ user_instance.username }} has no video posts. :(</span>
+	</div>
+{% endif %}
+
+<style type="text/css">
+	.user-profile {
+		background-color: white;
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+
+	.profile-picture {
+		width: 160px;
+		height: 160px;
+		border-radius: 160px;
+	}
+
+</style>
 {% endblock content %}
